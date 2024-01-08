@@ -20,11 +20,6 @@ app.use(
 );
 app.use(express.static("public", { extensions: ["html", "css"] }));
 
-const connect = mongoose.connect("mongodb://localhost:27017/Task");
-if (connect) {
-  console.log("Connected To Mongo Succesful");
-}
-
 app.use("/api/v1/task", protect, require("./routes/TaskRoute"));
 
 app.use("/api/v1/user", require("./routes/UserRoute"));
@@ -37,7 +32,13 @@ app.use((error, req, res, next) => {
   res.status(error.status);
   res.send(error);
 });
-
-app.listen(port, () => {
-  console.log(`Server is running at http://localhost:${port}`);
-});
+mongoose
+  .connect("mongodb://localhost:27017/Task")
+  .then(() => {
+    app.listen(port, () => {
+      console.log(`Server is running at http://localhost:${port}`);
+    });
+  })
+  .catch((err) => {
+    console.log("Not Connected to MongoDb" + err);
+  });
