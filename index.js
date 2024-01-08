@@ -19,7 +19,7 @@ app.use(
   })
 );
 app.use(express.static("public", { extensions: ["html", "css"] }));
-app.use('/static'express.static(join(process.cwd(),"public")));
+
 const connect = mongoose.connect("mongodb://localhost:27017/Task");
 if (connect) {
   console.log("Connected To Mongo Succesful");
