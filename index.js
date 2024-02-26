@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 app.use(express.json());
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "*",
     Credential: true,
   })
 );
@@ -27,13 +27,13 @@ app.use("/api/v1/user", require("./routes/UserRoute"));
 app.use((req, res, next) => {
   next(new createError.NotFound());
 });
-app.use((error, req, res, next) => {
+app.use((error, req, r0es, next) => {
   error.status = error.status || 500;
   res.status(error.status);
   res.send(error);
 });
 mongoose
-  .connect("mongodb://localhost:27017/Task")
+  .connect(process.env.MONGO_URI)
   .then(() => {
     app.listen(port, () => {
       console.log(`Server is running at http://localhost:${port}`);
