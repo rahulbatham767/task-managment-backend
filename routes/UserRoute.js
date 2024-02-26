@@ -1,4 +1,4 @@
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const { body, validationResult } = require("express-validator");
 const express = require("express");
 const router = express.Router();
