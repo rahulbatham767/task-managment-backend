@@ -18,7 +18,6 @@ app.use(
     Credential: true,
   })
 );
-app.use(express.static("public", { extensions: ["html", "css"] }));
 
 app.use("/api/v1/task", protect, require("./routes/TaskRoute"));
 
@@ -27,7 +26,7 @@ app.use("/api/v1/user", require("./routes/UserRoute"));
 app.use((req, res, next) => {
   next(new createError.NotFound());
 });
-app.use((error, req, r0es, next) => {
+app.use((error, req, res, next) => {
   error.status = error.status || 500;
   res.status(error.status);
   res.send(error);
